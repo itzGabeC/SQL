@@ -1,0 +1,26 @@
+--Create a gym clothes store database
+
+CREATE TABLE gym_clothes (id INTEGER PRIMARY KEY, sport TEXT, clothing_type TEXT, color TEXT, size Text, price INTEGER);
+
+INSERT INTO gym_clothes VALUES (1,'Basketball','Shorts','Yellow','M', 25);
+INSERT INTO gym_clothes VALUES (2,'Basketball','Shorts','Blue','L', 25);
+INSERT INTO gym_clothes VALUES (3,'Baseball','Pants','Grey','L', 60);
+INSERT INTO gym_clothes VALUES (4,'Baseball','Pants','Black','S', 60);
+INSERT INTO gym_clothes VALUES (5,'Softball','Pants','Black', 'M', 55);
+INSERT INTO gym_clothes VALUES (6,'Tennis','Shorts','Green', 'S', 20);
+INSERT INTO gym_clothes VALUES (7,'Tennis','Shorts','Yellow','M', 20);
+INSERT INTO gym_clothes VALUES (8,'Golf','Pants','Green','L', 80);
+INSERT INTO gym_clothes VALUES (9,'Golf','Pants','Red','L', 80);
+INSERT INTO gym_clothes VALUES (10,'Football','Pants','Grey','XL', 85);
+INSERT INTO gym_clothes VALUES (11,'Football','Pants','White','S', 85);
+INSERT INTO gym_clothes VALUES (12,'Hockey','Pants','Blue','XXL', 100);
+INSERT INTO gym_clothes VALUES (13,'Hockey','Pants','Dark Red','XL', 100);
+INSERT INTO gym_clothes VALUES (14,'Golf','Skirt','Hot Pink','XS', 50);
+INSERT INTO gym_clothes VALUES (15,'Volleyball','Shorts', 'Black','S', 60);
+
+--display the database ordered by price
+SELECT * FROM gym_clothes ORDER BY price;
+
+--what is the total price (SUM) of each clothing type?
+SELECT clothing_type, SUM(price) FROM gym_clothes GROUP BY clothing_type;
+
