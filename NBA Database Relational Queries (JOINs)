@@ -1,0 +1,93 @@
+/* Create table about the people and what they do here */
+
+--data pulled from https://www.kaggle.com/jacobbaruch/nba-player-of-the-week and customized for portfolio to showcase querying skills.
+--project showcases relational queries(JOINs)
+
+CREATE TABLE players(id INTEGER PRIMARY KEY AUTOINCREMENT,
+   Player            TEXT,
+   Height            TEXT,
+   Weight            INTEGER,
+   Age               INTEGER,
+   Height_CM         INTEGER,
+   Weight_KG         INTEGER
+   );
+
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Norman Powell','6''4',215,26,193,97);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('LeBron James','6''8',250,35,203,113);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Giannis Antetokounmpo','6''11',242,25,211,109);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Kristaps Porzingis','7''3',240,24,221,108);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Jayson Tatum','6''8',208,21,203,94);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Nikola Jokic','7''0',250,25,213,113);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Jaylen Brown','6''7',220,23,201,99);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Damian Lillard','6''3',195,29,190,88);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Pascal Siakam','6''9',230,25,206,104);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Ben Simmons','6''10',230,23,208,104);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Kawhi Leonard','6''7',230,28,201,104);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('Josh Richardson','6''6',200,26,198,90);
+INSERT INTO players(Player,Height,Weight,Age,Height_CM,Weight_KG) VALUES ('DeMar DeRozan','6''7',220,30,201,99);
+
+
+CREATE TABLE NBA_Stats(id INTEGER PRIMARY KEY AUTOINCREMENT,
+   Player_id         INTEGER,
+   Team              TEXT,
+   Conference        TEXT,
+   Draft_Year        INTEGER,
+   Seasons_in_league INTEGER,
+   Predraft_Team     TEXT
+   );
+
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (1,'Toronto Raptors','East',2015,4,'UCLA');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (2,'Los Angeles Lakers','West',2003,16,'St. Vincent St. Mary High School (Ohio)');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (3,'Milwaukee Bucks','East',2013,6,'Filathlitikos Div II Greece (Greece)');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (4,'Dallas Mavericks','West',2015,4,'Real Betis Energia Plus (Spain)');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (5,'Boston Celtics','East',2017,2,'Duke');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (6,'Denver Nuggets','West',2014,4,'KK Mega Bemax (Serbia)');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (7,'Boston Celtics','East',2016,3,'California');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (8,'Portland Trail Blazers','West',2012,7,'Weber State');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (9,'Toronto Raptors','East',2016,3,'New Mexico State');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (10,'Philadelphia Sixers','East',2016,3,'LSU');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (11,'Los Angeles Clippers','West',2011,8,'San Diego State');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (12,'Philadelphia Sixers','East',2015,4,'Tennessee');
+INSERT INTO NBA_Stats(Player_id,Team,Conference,Draft_Year,Seasons_in_league,Predraft_Team) VALUES (13,'San Antonio Spurs','West',2009,10,'USC');
+
+
+CREATE table Rivals (
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    person1_id INTEGER,
+    person2_id INTEGER);
+
+INSERT INTO Rivals (person1_id, person2_id)
+    VALUES (2, 3);
+INSERT INTO Rivals (person1_id, person2_id)
+    VALUES (11, 13);
+
+
+--Show which player is on which NBA team.
+
+SELECT players.Player, NBA_Stats.Team FROM players
+JOIN NBA_Stats
+ON players.id = NBA_Stats.Player_id;
+
+--Narrow down search for a single player.
+
+SELECT players.Player, NBA_Stats.Team FROM players
+JOIN NBA_Stats
+ON players.id = NBA_Stats.Player_id
+WHERE players.Player = 'LeBron James';
+
+--Show players names, height, team, and draft year. Then order by draft year.
+
+SELECT players.Player, players.Height, NBA_Stats.Team, NBA_Stats.Draft_Year
+    FROM players
+    LEFT OUTER JOIN NBA_Stats
+    ON players.id=NBA_Stats.Player_id
+    ORDER BY Draft_Year desc;
+
+--Showcase two sets of players that are rivals.
+
+SELECT a.Player, b.Player
+FROM Rivals
+JOIN players a
+ON a.id = Rivals.person1_id
+JOIN players b
+ON b.id = Rivals.person2_id;
