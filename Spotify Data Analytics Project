@@ -24,21 +24,31 @@ duration_ms integer NOT NULL,
 time_signature integer NOT NULL 
 )
 
---Then I inserted the Spotify Data .csv into the table.
+--Spotify Data .csv was inputed into the table created.
 
---Next, I explored the data using the following SQL. 
+--I performed data analytics with the following SQL.
 
---First I determined the avg popularity, danceability, and energy by artist and track. 
+
+--Display artists and their songs and order them by song key (the key the track is in. Integers map to pitches using standard Pitch Class notation. E.g. 0 = C, 1 = C♯/D♭, 2 = D, and so on. If no key was detected, the value is -1 (range: -1; 11).
 SELECT
 artist_name
 ,track_name
-,avg(popularity)
-,avg(danceability)
-,avg(energy)
+,song_key
+FROM BIT_DB.spotifydata
+GROUP BY artist_name, track_name
+ORDER BY song_key
+
+--Show the average speechiness, acousticness, and liveness by artist and track. 
+SELECT
+artist_name
+,track_name
+,avg(speechiness)
+,avg(acousticness)
+,avg(liveness)
 FROM BIT_DB.spotifydata
 GROUP BY artist_name, track_name
 
---Then I determined who the Top 10 artists are by popularity
+--Determine who the Top 10 artists are by popularity.
 SELECT track_name, artist_name, popularity
 FROM BIT_DB.spotifydata
 ORDER BY popularity desc
